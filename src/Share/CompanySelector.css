@@ -1,0 +1,13 @@
+.company-select-box {
+    margin-left: 180px;
+}
+
+.company-select {
+    border-style: none;
+    background-color: #F5F5F5;
+    outline: none;
+}
+
+option {
+    background-color: white;
+}

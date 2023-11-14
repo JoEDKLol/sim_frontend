@@ -1,0 +1,18 @@
+textarea {
+    border: 2px solid #9FBDBF;
+    width: 100%;
+    /* height: 40px; */
+    border-radius: 5px;
+}
+
+textarea:focus {
+    outline: 2px solid #d6e8e9;
+}
+
+.register-form {
+    width: 50%;
+}
+
+.regiter-box {
+    height: 700px;
+}

@@ -1,0 +1,22 @@
+.button {
+    background-color: #7E9085;
+    border: #7E9085;
+    padding: 4px 12px;
+    color: white;
+    border-radius: 3px;
+}
+
+.button:hover {
+    background-color: #98afa1;
+
+
+}
+
+.button:visited {
+    background-color: #98afa1;
+}
+
+.button:disabled {
+    background-color: #7f8180;
+
+}

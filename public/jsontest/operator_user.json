@@ -1,0 +1,28 @@
+[
+    {
+      "_id": "652f790cbb5be4ed4b9588b5",
+      "company_id": "65266b55ccc5e2fe0e1063bd",
+      "user": {
+        "user_id": "652f73dfbb5be4ed4b9588b1",
+        "user_name": "AAA",
+        "user_email": "AAA@AAA.com"
+      },
+      "regDate": "2023-10-18T06:19:56.733Z",
+      "regUser": "DaeHee",
+      "updDate": "2023-10-18T06:19:56.733Z",
+      "updUser": "DaeHee"
+    },
+    {
+      "_id": "652f790cbb5be4ed4b9588b6",
+      "company_id": "65266b55ccc5e2fe0e1063bd",
+      "user": {
+        "user_id": "652f73dfbb5be4ed4b9588b2",
+        "user_name": "BBB",
+        "user_email": "BBB@BBB.com"
+      },
+      "regDate": "2023-10-18T06:19:56.733Z",
+      "regUser": "DaeHee",
+      "updDate": "2023-10-18T06:19:56.733Z",
+      "updUser": "DaeHee"
+    }
+  ]

@@ -1,0 +1,35 @@
+.sideBar{
+    width: 160px;
+    height: 100vh;
+    background-color: #7E9085; /* Set the background color*/
+    border-radius: 10px;
+    /* padding-bottom: 150px; */
+
+}
+
+.sideBarLink {
+    color: white;
+    font-weight: bold;
+    font-size: 1.0rem;
+    text-decoration-line: none;
+
+    display:block; 
+    width:100%; 
+    height:30px;
+    border-radius: 4px;
+
+    padding-left: 7px;
+    
+}
+
+.sideBarLinkSelected{
+    /* color: rgb(189, 232, 196); */
+    color: #7E9085;
+    background-color: white;
+}
+
+.sideBarLink:hover{
+    /* color: rgb(189, 232, 196); */
+    color: #7E9085;
+    background-color: white;
+}

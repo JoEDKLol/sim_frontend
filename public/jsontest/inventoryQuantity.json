@@ -1,0 +1,154 @@
+[
+  {
+    "_id": "65267adcccc5e2fe0e1063c9",
+    "company_id": "65266b55ccc5e2fe0e1063bd",
+    "inventory_id": "652672deccc5e2fe0e1063c3",
+    "inventory_info": {
+      "sku_code": "AB00001",
+      "name": "t-shirt (red)",
+      "unit": "EA"
+    },
+    "date": "2023-10-01T09:00:00.000Z",
+    "action": "Purchase",
+    "quantity": 5,
+    "unit_price": 20,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063ce",
+    "company_id": "65266b55ccc5e2fe0e1063bd",
+    "inventory_id": "652672deccc5e2fe0e1063c4",
+    "inventory_info": {
+      "sku_code": "AB00002",
+      "name": "t-shirt (gray)",
+      "unit": "EA"
+    },
+    "date": "2023-10-06T09:00:00.000Z",
+    "action": "Reduce",
+    "quantity": 2,
+    "unit_price": 20,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063cc",
+    "company_id": "65266b55ccc5e2fe0e1063bd",
+    "inventory_id": "652672deccc5e2fe0e1063c3",
+    "inventory_info": {
+      "sku_code": "AB00001",
+      "name": "t-shirt (red)",
+      "unit": "EA"
+    },
+    "date": "2023-10-10T09:00:00.000Z",
+    "action": "Reduce",
+    "quantity": 10,
+    "unit_price": 40,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063ca",
+    "company_id": "65266b55ccc5e2fe0e1063bd",
+    "inventory_id": "652672deccc5e2fe0e1063c3",
+    "inventory_info": {
+      "sku_code": "AB00001",
+      "name": "t-shirt (red)",
+      "unit": "EA"
+    },
+    "date": "2023-10-05T09:00:00.000Z",
+    "action": "Purchase",
+    "quantity": 2,
+    "unit_price": 20,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063cb",
+    "company_id": "65266b55ccc5e2fe0e1063bd",
+    "inventory_id": "652672deccc5e2fe0e1063c3",
+    "inventory_info": {
+      "sku_code": "AB00001",
+      "name": "t-shirt (red)",
+      "unit": "EA"
+    },
+    "date": "2023-10-06T09:00:00.000Z",
+    "action": "Purchase",
+    "quantity": 20,
+    "unit_price": 20,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063d0",
+    "company_id": "65266b55ccc5e2fe0e1063be",
+    "inventory_id": "652672deccc5e2fe0e1063c6",
+    "inventory_info": {
+      "sku_code": "AB00004",
+      "name": "running shoes (type-A)",
+      "unit": "EA"
+    },
+    "date": "2023-10-10T09:00:00.000Z",
+    "action": "Reduce",
+    "quantity": 10,
+    "unit_price": 25,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063cd",
+    "company_id": "65266b55ccc5e2fe0e1063bd",
+    "inventory_id": "652672deccc5e2fe0e1063c4",
+    "inventory_info": {
+      "sku_code": "AB00002",
+      "name": "t-shirt (gray)",
+      "unit": "EA"
+    },
+    "date": "2023-10-05T09:00:00.000Z",
+    "action": "Purchase",
+    "quantity": 5,
+    "unit_price": 10,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  },
+  {
+    "_id": "65267adcccc5e2fe0e1063cf",
+    "company_id": "65266b55ccc5e2fe0e1063be",
+    "inventory_id": "652672deccc5e2fe0e1063c6",
+    "inventory_info": {
+      "sku_code": "AB00004",
+      "name": "running shoes (type-A)",
+      "unit": "EA"
+    },
+    "date": "2023-10-07T09:00:00.000Z",
+    "action": "Purchase",
+    "quantity": 10,
+    "unit_price": 15,
+    "delete_yn": "n",
+    "reg_date": "2023-10-11T10:37:16.621Z",
+    "reg_user": "DaeHee",
+    "upd_date": "2023-10-11T10:37:16.621Z",
+    "upd_user": "DaeHee"
+  }
+]

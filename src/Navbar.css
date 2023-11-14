@@ -1,0 +1,22 @@
+/* Navbar styling */
+.navMargin{
+    margin-top: 20px;
+  }
+  .navbar-last-item {
+    margin-top: 250px;
+  }
+  .custom-navbar {
+    background-color: #7E9085; /* Set the background color*/
+    width: 100px;
+  }
+  .white-text{
+    color: #fff; /* Set the text color to white */
+  }
+  .rounded-navbar {
+    border-radius: 10px; /* Adjust the value to control the amount of rounding */
+  }
+  /* Style for the logo image */
+  .logo img {
+    max-width: 100px; /* Adjust the width as needed */
+    height: auto;
+  }

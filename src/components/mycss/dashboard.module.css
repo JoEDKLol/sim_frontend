@@ -1,0 +1,23 @@
+.dashboardBox1 {
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #B9B9B9;
+    /* padding: 5px; */
+    /* width: 80%; */
+    height: 280px;
+    background-color: white;
+}
+
+.divSize{
+    width:80%;
+    height: 100%;
+    
+}
+
+.dashboardBox2 {
+    border-radius: 5px;
+    box-shadow: 3px 3px 3px #B9B9B9;
+    /* padding: 5px; */
+    /* width: 80%; */
+    height: 280px;
+    background-color: white;
+}

@@ -1,0 +1,9 @@
+.period-select {
+    margin-right: 5rem;
+}
+
+.period-select .date-select {
+    border-radius: 3px;
+    border: 1px solid #B9B9B9;
+
+}

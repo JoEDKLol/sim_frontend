@@ -1,0 +1,11 @@
+.report-table {
+    border-top: 2px solid black;
+}
+
+.report-table-head {
+    border: 2px solid black;
+}
+
+.report-table-body td {
+    border-style: none;
+}

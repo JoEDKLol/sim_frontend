@@ -41,30 +41,33 @@ const Login = (props) => {
 
         let authCheck = async () => {
             try{
-                let resp = await axios.post("http://localhost:3002/login",loginObj);
+                // let resp = await axios.post("http://localhost:3002/login",loginObj);
+                let resp = await axios.post(process.env.REACT_APP_BACKURL + "login",loginObj);
                 let data = await resp.data;
-                console.log(data);
+
                 if(data.loginYn != "n"){
-                    // props.getLoginYn("y");
-                    // sessionStorage.setItem('loginId', data._id);
-                    // sessionStorage.setItem('userName', data.userName);
-                    // sessionStorage.setItem('role', data.role);
+                    props.getLoginYn("y");
+                    sessionStorage.setItem('loginId', data.loginId);
+                    sessionStorage.setItem('userName', data.userName);
+                    sessionStorage.setItem('role', data.role);
+                    sessionStorage.setItem('email', data.email);
 
-                    // localStorage.setItem('loginId', data._id);
-                    // localStorage.setItem('userName', data.userName);
-                    // localStorage.setItem('role', data.role);
+                    localStorage.setItem('loginId', data.loginId);
+                    localStorage.setItem('userName', data.userName);
+                    localStorage.setItem('role', data.role);
+                    localStorage.setItem('email', data.email);
 
-                    // navigate('/myProfileManagement/' + data._id);
-                    // setLogMsg("");
+                    navigate('/myProfileManagement/' + data.loginId);
+                    setLogMsg("");
                 }else{
-                    // setLoginYn("");                     
-                    // setLogMsg("Authentication Failed");
+                    setLoginYn("");                     
+                    setLogMsg("Authentication Failed");
                 }
 
 
 
             }catch(e){
-                console.log(e);
+                // console.log(e);
             }finally{
                 setLoginBtDisabled(false);
             }

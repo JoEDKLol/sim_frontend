@@ -50,7 +50,6 @@ const ForgetPassword = () => {
         e.preventDefault();
         setEmailMsg("");
         let retObj = checkEmail(pwObj);
-        
         if(!retObj.yn){
             focusEmail.current.focus();
             // console.log(retObj.str);
@@ -58,14 +57,11 @@ const ForgetPassword = () => {
             return;
         }
 
-
-        
         // console.log(pwObj);
         let emailCheck = async () => {
             try{
-                let resp = await axios.post("http://localhost:3002/fpChackEmail",pwObj);
+                let resp = await axios.post(process.env.REACT_APP_BACKURL + "fpChackEmail",pwObj);
                 let data = await resp.data;
-                
                 if(data.fpChackEmail == "y"){
                     let rNum = getRandomNumber(6);
                     sendEmail(data, rNum);
@@ -88,14 +84,16 @@ const ForgetPassword = () => {
 
         let fpChgReqSave = async () => {
             try{
-                let resp = await axios.post("http://localhost:3002/fpChgReqSave",fpChgReqObj);
+                let resp = await axios.post(process.env.REACT_APP_BACKURL + "fpChgReqSave",fpChgReqObj);
                 let data = await resp.data;
+                
+                
                 setUserObj({...pwObj, user_id:data.user_id})
                 setSendAct(true)
                 setConfirmAct(false);
                 
             }catch{
-
+                
             }
         }
         fpChgReqSave();
@@ -106,10 +104,11 @@ const ForgetPassword = () => {
             to_email: pwObj.email,
             number: number
         };
-        
-        emailjs.send('service_lrjqxuy','template_624pjwq', templateParams, "8jpab6TZ9cNujQLXW")
+
+
+
+        emailjs.send(process.env.REACT_APP_SERVICE_ID,process.env.REACT_APP_TEMPLATE_ID, templateParams, process.env.REACT_APP_PUBLIC_KEY)
         .then(function(response) {
-            // console.log('SUCCESS!', response.status, response.text);
             fpChackEmailSave(data, number);
         }, function(err) {
             // console.log('FAILED...', err);
@@ -129,9 +128,9 @@ const ForgetPassword = () => {
 
         let confirmCheck = async () => {
             try{
-                let resp = await axios.post("http://localhost:3002/confirmCheck",pwObj);
+                let resp = await axios.post(process.env.REACT_APP_BACKURL+ "confirmCheck",pwObj);
                 let data = await resp.data;
-                console.log(data);
+                // console.log(data);
                 if(data.confirmCheck == "y"){
                     setChangeAct(false);
                     setConfirmAct(true);
@@ -180,7 +179,7 @@ const ForgetPassword = () => {
 
         let updatePassword = async () => {
             try{
-                let resp = await axios.post("http://localhost:3002/updatePassword",pwObj);
+                let resp = await axios.post(process.env.REACT_APP_BACKURL + "updatePassword",pwObj);
                 let data = await resp.data;
                 
                 // console.log(data);

@@ -73,10 +73,8 @@ const SignUp = () => {
 
         let authCheck = async () => {
             try{
-                
-                let resp = await axios.post("http://localhost:3002/signup",userObj);
+                let resp = await axios.post(process.env.REACT_APP_BACKURL + "signup",userObj);
                 let data = await resp.data;
-                // console.log(data);
                 if(data.code == "11000"){
                     // console.log("The email already exists.");
                     setRePasswordMsg("The email already exists.");

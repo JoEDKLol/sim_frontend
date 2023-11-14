@@ -70,9 +70,13 @@ const Sidebar = (props) => {
         sessionStorage.removeItem("loginId");
         sessionStorage.removeItem("userName");
         sessionStorage.removeItem("role");
+        sessionStorage.removeItem("email");
+        
         localStorage.removeItem("loginId");
         localStorage.removeItem("userName");
         localStorage.removeItem("role");
+        localStorage.removeItem("email");
+
         // window.sessionStorage.setItem('loginId', "");
     }
 

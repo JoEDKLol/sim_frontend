@@ -3,27 +3,25 @@ import styles from './mycss/login.module.css'
 import { useRef, useState } from 'react';
 import '../Share/Button.css'
 import axios from 'axios';
+import {storeToken, transactionAdd} from '../utils/transaction'
+
 const Login = (props) => {
-    const navigate = useNavigate()
     let [loginObj, setLoginObj] = useState({email:'',password:''});
     let [loginBtDisabled, setLoginBtDisabled] = useState(false);
     let [loginYn, setLoginYn] = useState("invisible");
     let [logMsg, setLogMsg] = useState("Authentication Failed");
-
+    const navigate = useNavigate()
     const focusEmail = useRef();
     const focusPassword = useRef();
 
-    if(!props.userInfo){
-        return <>Loding...</> 
-    }
 
     const logInChangeHandler = (e) => {
         setLoginObj({...loginObj, [e.target.id]:e.target.value})
     }
-    
 
     let loginMsg = "Authentication Failed";
     const loginClickHandler2 = (e) => {
+        
         e.preventDefault();
 
         if(loginObj.email == ""){
@@ -38,34 +36,28 @@ const Login = (props) => {
 
         setLoginBtDisabled(true);
         setLoginYn("invisible");
-
+        
         let authCheck = async () => {
             try{
                 // let resp = await axios.post("http://localhost:3002/login",loginObj);
+                // axios.defaults.withCredentials = true;
                 let resp = await axios.post(process.env.REACT_APP_BACKURL + "login",loginObj);
                 let data = await resp.data;
-
-                if(data.loginYn != "n"){
-                    props.getLoginYn("y");
-                    sessionStorage.setItem('loginId', data.loginId);
-                    sessionStorage.setItem('userName', data.userName);
-                    sessionStorage.setItem('role', data.role);
-                    sessionStorage.setItem('email', data.email);
-
-                    localStorage.setItem('loginId', data.loginId);
-                    localStorage.setItem('userName', data.userName);
-                    localStorage.setItem('role', data.role);
-                    localStorage.setItem('email', data.email);
-
-                    navigate('/myProfileManagement/' + data.loginId);
-                    setLogMsg("");
-                }else{
-                    setLoginYn("");                     
-                    setLogMsg("Authentication Failed");
-                }
-
-
-
+                
+                    if(data.loginYn == "y"){
+                        data.accesstoken = resp.headers.accesstoken;
+                        data.refreshtoken = resp.headers.refreshtoken;
+                        console.log(data);
+                        
+                        storeToken(data);
+                        setLoginYn("y");
+                        props.getLoginYn("y");
+                        props.getUserData(data);
+                        navigate('/myProfileManagement/')
+                    }else{
+                        setLoginYn("");                     
+                        setLogMsg("Authentication Failed");
+                    }
             }catch(e){
                 // console.log(e);
             }finally{
@@ -106,6 +98,15 @@ const Login = (props) => {
         }
     }
 
+    const test = (e) => {
+        e.preventDefault();
+        transactionAdd("get", "operatoruser", loginObj, transactionAddCallback);
+    }
+
+    const transactionAddCallback = (data) => {
+        console.log("here::", data);
+    }
+
     
 
     return ( 
@@ -127,6 +128,7 @@ const Login = (props) => {
                         </div>
                         <div className='mx-3 mb-1'>
                             <button type="submit" className={"button " + styles.loginButton} onClick={(e)=>loginClickHandler2(e)} disabled={loginBtDisabled}>Log in</button>
+                            {/* <button type="submit" className={"button " + styles.loginButton} onClick={(e)=>test(e)} >test</button> */}
                         </div>
                         <div className={loginYn + ' mt-3 ' + styles.loginFailFont}><span >{logMsg}</span></div>
                     </form>     

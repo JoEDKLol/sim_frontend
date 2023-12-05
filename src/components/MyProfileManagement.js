@@ -19,10 +19,16 @@ const MyProfileManagement = (props) => {
     const [companyData, setCompanyData] = useState([]);
     const [operatorUserData, setOperatorUserData] = useState([]);
     const [findOpUser, setFindOpuser] = useState([]);
-    const [selectOpCom, setSelectOpCom] = useState();
+    const [selectOpCom, setSelectOpCom] = useState("");
     const [operatorUserEmail, setOperatorUserEmail] = useState("");
+    const [addOpUserMsg, setAddOpUserMsg] = useState("");
+    
+    
     const navigate = useNavigate()
     const paramObj = useParams();
+
+    
+
     const getUserData = (obj) => {
         setUserData(
             {id:obj.id, email:obj.email}
@@ -132,31 +138,67 @@ const MyProfileManagement = (props) => {
 
     const companySelectHandler = (e) => { 
         // let id=e.target.value;
+        setFindOpuser([]);
+        setSelectOpCom("");
+        setAddOpUserMsg("");
+        if(!e.target.value){
+            return;
+        }
+        setSelectOpCom(e.target.value);
+        let tranfindUserInfo = async () => {
+            transactionAdd("get", "operatoruser/"+e.target.value, "", companySelectHandlerCallback);
+        }
+        tranfindUserInfo();
         // setFindOpuserFunc(id);
+    }
+
+    const companySelectHandlerCallback = (operatorUserData) => {
+        // console.log(operatorUserData.length);
+        if(operatorUserData.length !== 0){
+            let arrOpUserData = [];
+            for(let i=0; i<operatorUserData.length; i++){
+                let  obj = {
+                    _id:operatorUserData[0]._id,
+                    regDate:operatorUserData[0].regDate,
+                    user_name:operatorUserData[0].user.user_name,
+                    user_email:operatorUserData[0].user.user_email
+
+                }
+                arrOpUserData.push(obj);
+             
+            }
+            // console.log(arrOpUserData);
+            setFindOpuser(arrOpUserData);
+        }
+
     }
 
     const addOperatorUserHandler = () => {
         
-        // if(typeof selectOpCom == "undefined" || selectOpCom==""){
-        //     alert("Plaese choose company");
-        //     return;            
-        // }
+        if(typeof selectOpCom == "undefined" || selectOpCom==""){
+            // alert("Plaese choose company");
+            setAddOpUserMsg("Plaese choose company");
+            return;            
+        }
 
-        // if(operatorUserEmail == ""){
-        //     alert("Please enter your email");  
-        //     return;
-        // }
+        // console.log(selectOpCom);
+
+        if(operatorUserEmail == ""){
+            // alert("Please enter your email");
+            setAddOpUserMsg("Please enter your email");  
+            return;
+        }
     
-        // if(!window.confirm("Would you like to register as an Operator user?")){
-        //     return;
-        // }else{
+        if(!window.confirm("Would you like to register as an Operator user?")){
+            return;
+        }else{
             
-        // }
+        }
     }
 
     const operatorUserEmailHandler = (e) => {
-        // // alert(e.target.value);
-        // setOperatorUserEmail(e.target.value);
+        setAddOpUserMsg("");
+        setOperatorUserEmail(e.target.value);
     }
     
 
@@ -182,9 +224,6 @@ const MyProfileManagement = (props) => {
                         <div className='col-3 mb-1'>
                             <select className={" "+styles.select } onChange={(e) => companySelectHandler(e)}>
                                 <option value="">Select</option>
-                                {/* {arrfindCompanyInfo.map((e)=>
-                                    <option key={e._id} value={e._id} >{e.name}</option>
-                                )} */}
                                 {findUserInfo.companies_manager.map((e)=> 
                                     <option key={e.company_id} value={e.company_id} >{e.company_name}</option>
                                 )}
@@ -197,6 +236,7 @@ const MyProfileManagement = (props) => {
                         <div className='col-3 mb-1 text-start'>
                             <Button buttonName={"Add an operator"} onClick={(e)=>addOperatorUserHandler(e)}/>
                         </div>
+                        <div className={styles.loginFailFont + " text-start"}><span >{addOpUserMsg}</span></div>
                     </div>
                     
                     <div className={"row mt-2 " + showHide2}>
@@ -204,7 +244,9 @@ const MyProfileManagement = (props) => {
                             <div className="col-6"><p className="text-start fw-bolder me-3">You don't have any manager company yet</p></div>
                             <div className="col-6 text-end pe-3"><Button buttonName={"Add an company"}/></div>
                         </div>
+                        
                     </div>
+                    
                 </div>
             </div>
 
@@ -216,15 +258,25 @@ const MyProfileManagement = (props) => {
                     </tr>
                 </thead>
                 <tbody>
-                    {/* {findOpUser.map(
-                        (e) => 
-                        <tr key={e._id}>
+
+                    {(findOpUser.length !== 0)?
+
+
+                    findOpUser.map(
+                        (e, i) => 
+                        <tr key={i}>
                             <td>{e.regDate.slice(0, 10)}</td>
-                            <td>{e.user.user_name}</td>
-                            <td>{e.user.user_email}</td>
+                            <td>{e.user_name}</td>
+                            <td>{e.user_email}</td>
                         </tr>
                         
-                    )} */}
+                    )
+                    :
+                       <tr >
+                            <td colSpan={3}>no search results.</td>
+                        </tr>
+                    }
+
                     {/* {props.tableData.map(data => <InventoryPurchaseRow row={data} key={data.inventory_info._id} />)} */}
                 </tbody>
             </table>

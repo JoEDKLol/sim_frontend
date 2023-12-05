@@ -44,7 +44,7 @@ const Landing = () => {
                         
                         <div className={"col-6 d-none d-md-block "}>
                             
-                            <img className={'' + styles.landingImg} src='/images/lanading_img.png'/>
+                            <img className={'' + styles.landingImg} src='/images/lanading_img.jpg'/>
                             
                         </div>
 

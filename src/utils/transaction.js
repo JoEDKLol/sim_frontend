@@ -46,7 +46,7 @@ const clearToken = (obj) => {
 const transactionAdd = async (type, url, obj, callback) => {
     try{
         let resp, data;
-        
+
         if(type == "get"){
             resp = await axiosAuth.get(process.env.REACT_APP_BACKURL + "auth/" + url ,obj);
             data = await resp.data;

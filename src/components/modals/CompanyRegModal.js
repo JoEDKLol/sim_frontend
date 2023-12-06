@@ -5,7 +5,7 @@ const CompanyRegModal = () => {
 
     const onchangeHandler = (e) => {
 
-        
+            
     }
 
     const componySaveClickHandler = (e) => {

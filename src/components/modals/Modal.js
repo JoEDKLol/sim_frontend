@@ -2,11 +2,14 @@ import { useEffect, useRef } from 'react';
 import styles from './modal.module.css'
 import CompanyRegModal from './CompanyRegModal';
 import InventoryRegModal from './InventoryRegModal';
+import ConfirmModal from './ConfirmModal';
 const Modal = (props) => {
     
     const closeModal = () => {
         props.setModalShowF(false);
     };
+
+
 
     const modalRef = useRef();
     useEffect(() => {
@@ -23,7 +26,9 @@ const Modal = (props) => {
     return ( 
         <>
             {
-                <div ref={modalRef} className={" " + styles.container }>
+                <div ref={modalRef} className={" " + 
+                    (props.size === "confirm")?styles.containerConfirm:styles.container 
+                }>
                     <div className='row text-end p-2'>
                         <div className='col-6 text-start fw-bold'>{props.modalTitle}</div>
                         <div className='col-6'>
@@ -35,7 +40,8 @@ const Modal = (props) => {
                         <div>
                             {
                                 (props.type == "company")?<CompanyRegModal/>:
-                                (props.type == "inventory")?<InventoryRegModal/>:""
+                                (props.type == "inventory")?<InventoryRegModal/>:
+                                (props.type == "confirm")?<ConfirmModal msg={props.msg} setModalShowF={props.setModalShowF} setConfirmMod={props.setConfirmMod}/>:""
                                 
 
                             }

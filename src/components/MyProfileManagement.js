@@ -8,6 +8,8 @@ import Table from "../Share/Table.js";
 import { SimStateContext } from "../App.js";
 // import { SimStateContext } from "../App.js";
 import {transactionAdd} from '../utils/transaction'
+import Modal from './modals/Modal.js';
+
 const MyProfileManagement = (props) => {
 
     const [userData, setUserData] = useState({id:'',email:''});
@@ -22,12 +24,15 @@ const MyProfileManagement = (props) => {
     const [selectOpCom, setSelectOpCom] = useState("");
     const [operatorUserEmail, setOperatorUserEmail] = useState("");
     const [addOpUserMsg, setAddOpUserMsg] = useState("");
-    
+    const [modalShow, setModalShow] = useState(false);
+    const [confirm, setSonfirm] = useState(false);
     
     const navigate = useNavigate()
     const paramObj = useParams();
 
-    
+    const setConfirmMod = (b) => {
+        setSonfirm(b);
+    }
 
     const getUserData = (obj) => {
         setUserData(
@@ -42,6 +47,13 @@ const MyProfileManagement = (props) => {
         transactionAdd("post", "", obj, transactionAddCallback);
         
     }, []);
+
+    useEffect(() => {
+        console.log(confirm);
+        if(confirm === true){
+            operatorUserReg();
+        }
+    }, [confirm]);
 
     const transactionAddCallback = (data, error) => { 
         if(data){
@@ -153,15 +165,15 @@ const MyProfileManagement = (props) => {
     }
 
     const companySelectHandlerCallback = (operatorUserData) => {
-        // console.log(operatorUserData.length);
+        // console.log(operatorUserData);
         if(operatorUserData.length !== 0){
             let arrOpUserData = [];
             for(let i=0; i<operatorUserData.length; i++){
                 let  obj = {
-                    _id:operatorUserData[0]._id,
-                    regDate:operatorUserData[0].regDate,
-                    user_name:operatorUserData[0].user.user_name,
-                    user_email:operatorUserData[0].user.user_email
+                    _id:operatorUserData[i]._id,
+                    regDate:operatorUserData[i].regDate,
+                    user_name:operatorUserData[i].user.user_name,
+                    user_email:operatorUserData[i].user.user_email
 
                 }
                 arrOpUserData.push(obj);
@@ -188,13 +200,36 @@ const MyProfileManagement = (props) => {
             setAddOpUserMsg("Please enter your email");  
             return;
         }
-    
-        if(!window.confirm("Would you like to register as an Operator user?")){
-            return;
-        }else{
-            
-        }
+
+        setModalShow(true);
+
+
     }
+
+    function operatorUserReg(){
+
+        let tranOperatorUserReg = async () => {
+            let obj ={
+                id:userData.id,
+                email:userData.email,
+                companyId:selectOpCom,
+                operatorUserEmail:operatorUserEmail
+            }
+
+            transactionAdd("post", "regoperatoruser", obj, tranOperatorUserRegCallback);
+        }
+        tranOperatorUserReg();
+    }
+
+    function tranOperatorUserRegCallback(data){
+        console.log(data);
+    }
+
+    const setModalShowF = (yn) => {
+        setModalShow(yn);
+    }
+
+    
 
     const operatorUserEmailHandler = (e) => {
         setAddOpUserMsg("");
@@ -236,6 +271,14 @@ const MyProfileManagement = (props) => {
                         <div className='col-3 mb-1 text-start'>
                             <Button buttonName={"Add an operator"} onClick={(e)=>addOperatorUserHandler(e)}/>
                         </div>
+                        <div className='mt-1 ms-4 text-start'>
+                        {
+                            (modalShow)?
+                            <Modal setModalShowF={setModalShowF} modalTitle={"Operator user Registration"} type={"confirm"} size="confirm" setConfirmMod={setConfirmMod}
+                            msg={"Would you like to register as an Operator user?"}/>
+                            :""
+                        }
+                    </div>
                         <div className={styles.loginFailFont + " text-start"}><span >{addOpUserMsg}</span></div>
                     </div>
                     

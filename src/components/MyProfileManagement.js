@@ -25,13 +25,13 @@ const MyProfileManagement = (props) => {
     const [operatorUserEmail, setOperatorUserEmail] = useState("");
     const [addOpUserMsg, setAddOpUserMsg] = useState("");
     const [modalShow, setModalShow] = useState(false);
-    const [confirm, setSonfirm] = useState(false);
+    const [confirm, setConfirm] = useState(false);
     
     const navigate = useNavigate()
     const paramObj = useParams();
 
     const setConfirmMod = (b) => {
-        setSonfirm(b);
+        setConfirm(b);
     }
 
     const getUserData = (obj) => {
@@ -40,7 +40,7 @@ const MyProfileManagement = (props) => {
         )
     }
 
-    const tableHead = ['DATE', 'EMAIL', 'NAME'];
+    const tableHead = ['DATE', 'NAME', 'EMAIL'];
     // const data = useContext(SimStateContext);
     useEffect(() => {
         let obj = {check:"isToken"};
@@ -49,7 +49,7 @@ const MyProfileManagement = (props) => {
     }, []);
 
     useEffect(() => {
-        console.log(confirm);
+        // console.log(confirm);
         if(confirm === true){
             operatorUserReg();
         }
@@ -79,6 +79,9 @@ const MyProfileManagement = (props) => {
                 if(findUserData.companies_manager.length>0){
                     setShowHide("");
                     setShowHide2("d-none");
+                }else{
+                    setShowHide("d-none");
+                    setShowHide2("");
                 }
             }
 
@@ -149,19 +152,40 @@ const MyProfileManagement = (props) => {
     }
 
     const companySelectHandler = (e) => { 
-        // let id=e.target.value;
+        let id=e.target.value;
+        companySelectSearch(id)
+        // setFindOpuser([]);
+        // setSelectOpCom("");
+        // setAddOpUserMsg("");
+        // if(!e.target.value){
+        //     return;
+        // }
+        // setSelectOpCom(e.target.value);
+
+        
+
+        // let tranfindUserInfo = async () => {
+        //     transactionAdd("get", "operatoruser/"+e.target.value, "", companySelectHandlerCallback);
+        // }
+        // tranfindUserInfo();
+        // setFindOpuserFunc(id);
+    }
+
+    const companySelectSearch = (id) => {
         setFindOpuser([]);
         setSelectOpCom("");
         setAddOpUserMsg("");
-        if(!e.target.value){
+        if(!id){
             return;
         }
-        setSelectOpCom(e.target.value);
+        setSelectOpCom(id);
+
+        
+
         let tranfindUserInfo = async () => {
-            transactionAdd("get", "operatoruser/"+e.target.value, "", companySelectHandlerCallback);
+            transactionAdd("get", "operatoruser/"+id, "", companySelectHandlerCallback);
         }
         tranfindUserInfo();
-        // setFindOpuserFunc(id);
     }
 
     const companySelectHandlerCallback = (operatorUserData) => {
@@ -208,21 +232,30 @@ const MyProfileManagement = (props) => {
 
     function operatorUserReg(){
 
+        let selectedCompany = findUserInfo.companies_manager.find((elem)=>{return elem.company_id === selectOpCom});
+        
         let tranOperatorUserReg = async () => {
             let obj ={
                 id:userData.id,
                 email:userData.email,
-                companyId:selectOpCom,
+                company_id:selectOpCom,
+                company_name:selectedCompany.company_name,
                 operatorUserEmail:operatorUserEmail
             }
-
+            console.log(obj);
             transactionAdd("post", "regoperatoruser", obj, tranOperatorUserRegCallback);
         }
         tranOperatorUserReg();
     }
 
     function tranOperatorUserRegCallback(data){
-        console.log(data);
+        // console.log(data);
+        setConfirm(false);
+        if(data.success === "n"){
+            // console.log(data.message);
+            setAddOpUserMsg(data.massage);  
+        }
+        companySelectSearch(selectOpCom);
     }
 
     const setModalShowF = (yn) => {
@@ -260,7 +293,7 @@ const MyProfileManagement = (props) => {
                             <select className={" "+styles.select } onChange={(e) => companySelectHandler(e)}>
                                 <option value="">Select</option>
                                 {findUserInfo.companies_manager.map((e)=> 
-                                    <option key={e.company_id} value={e.company_id} >{e.company_name}</option>
+                                    <option key={e.company_id} value={e.company_id}>{e.company_name}</option>
                                 )}
 
                             </select>

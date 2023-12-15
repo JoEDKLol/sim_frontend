@@ -26,6 +26,8 @@ const MyProfileManagement = (props) => {
     const [addOpUserMsg, setAddOpUserMsg] = useState("");
     const [modalShow, setModalShow] = useState(false);
     const [confirm, setConfirm] = useState(false);
+
+    const [paging, setPaging] = useState({});
     
     const navigate = useNavigate()
     const paramObj = useParams();
@@ -40,7 +42,7 @@ const MyProfileManagement = (props) => {
         )
     }
 
-    const tableHead = ['DATE', 'NAME', 'EMAIL'];
+    const tableHead = ['DATE', 'NAME', 'EMAIL', 'ACTION'];
     // const data = useContext(SimStateContext);
     useEffect(() => {
         let obj = {check:"isToken"};
@@ -154,21 +156,6 @@ const MyProfileManagement = (props) => {
     const companySelectHandler = (e) => { 
         let id=e.target.value;
         companySelectSearch(id)
-        // setFindOpuser([]);
-        // setSelectOpCom("");
-        // setAddOpUserMsg("");
-        // if(!e.target.value){
-        //     return;
-        // }
-        // setSelectOpCom(e.target.value);
-
-        
-
-        // let tranfindUserInfo = async () => {
-        //     transactionAdd("get", "operatoruser/"+e.target.value, "", companySelectHandlerCallback);
-        // }
-        // tranfindUserInfo();
-        // setFindOpuserFunc(id);
     }
 
     const companySelectSearch = (id) => {
@@ -188,8 +175,11 @@ const MyProfileManagement = (props) => {
         tranfindUserInfo();
     }
 
-    const companySelectHandlerCallback = (operatorUserData) => {
-        // console.log(operatorUserData);
+    const companySelectHandlerCallback = (data) => {
+        // console.log(data.totCnt);
+
+        let operatorUserData = data.list;
+        
         if(operatorUserData.length !== 0){
             let arrOpUserData = [];
             for(let i=0; i<operatorUserData.length; i++){
@@ -205,6 +195,47 @@ const MyProfileManagement = (props) => {
             }
             // console.log(arrOpUserData);
             setFindOpuser(arrOpUserData);
+
+            let totCnt = data.totCnt;
+            let currentPage = 1;
+            let showTotPage = 3;
+            let totPage = Math.ceil(totCnt / showTotPage);            
+            /*
+            1 -> 1, 2, 3
+            2 -> 1, 2, 3
+            3 -> 1, 2, 3
+            4 -> 4, 5, 6
+            ...
+            */
+            let startPage;
+            
+            let p = Math.floor(currentPage / showTotPage);
+            let n = currentPage % showTotPage;
+            if(n === 0){
+                startPage = (p-1)*showTotPage + 1;
+            }else{
+                startPage = (p)*showTotPage + 1
+            }
+
+            // let endPage = startPage+2;
+            for(let i=0; i<showTotPage; i++){
+                if(startPage > totPage){
+                    return;
+                }else{
+                    console.log(startPage++);
+                }
+                
+            }
+
+            
+
+            // if(currentPage < showTotPage){
+
+            // }
+            
+            // for(let i=0; i<totPage; i++){
+
+            // }
         }
 
     }
@@ -249,11 +280,11 @@ const MyProfileManagement = (props) => {
     }
 
     function tranOperatorUserRegCallback(data){
-        // console.log(data);
         setConfirm(false);
         if(data.success === "n"){
             // console.log(data.message);
             setAddOpUserMsg(data.massage);  
+            return ;
         }
         companySelectSearch(selectOpCom);
     }
@@ -344,6 +375,7 @@ const MyProfileManagement = (props) => {
                             <td>{e.regDate.slice(0, 10)}</td>
                             <td>{e.user_name}</td>
                             <td>{e.user_email}</td>
+                            <td><button></button></td>
                         </tr>
                         
                     )
@@ -355,7 +387,25 @@ const MyProfileManagement = (props) => {
 
                     {/* {props.tableData.map(data => <InventoryPurchaseRow row={data} key={data.inventory_info._id} />)} */}
                 </tbody>
-            </table>
+                </table>
+                <div>
+                    <nav aria-label="Page navigation example">
+                        <ul className="pagination justify-content-center">
+                            {/* <li className="page-item disabled">
+                            <a className="page-link" href="#" tabindex="-10">Previous</a>
+                            </li> */}
+                            {/* <li className="page-item">
+                            <a className="page-link" href="#">Previous</a>
+                            </li>
+                            <li className="page-item"><a className="page-link" href="#">1</a></li>
+                            <li className="page-item"><a className="page-link" href="#">2</a></li>
+                            <li className="page-item"><a className="page-link" href="#">3</a></li>
+                            <li className="page-item">
+                            <a className="page-link" href="#">Next</a>
+                            </li> */}
+                        </ul>
+                    </nav>
+                </div>
             </div>
         </div>
         // </SimStateContext.Consumer>

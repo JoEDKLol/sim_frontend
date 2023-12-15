@@ -70,7 +70,7 @@ const transactionAdd = async (type, url, obj, callback) => {
             }
             
         }
-
+        // console.log(resp);
         callback(data);
     }
     catch(error){

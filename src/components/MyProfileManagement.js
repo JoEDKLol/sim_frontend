@@ -27,8 +27,11 @@ const MyProfileManagement = (props) => {
     const [modalShow, setModalShow] = useState(false);
     const [confirm, setConfirm] = useState(false);
 
-    const [paging, setPaging] = useState({});
-    
+    const [pages, setPages] = useState([]);
+    const [pageInf, setPageInf] = useState({prev:false, next:false, startPage:0, lastPage:0} );
+    const [pageListCnt, setPageListCnt] = useState(2);
+    const [dividePage, setDividePage] = useState(1);
+
     const navigate = useNavigate()
     const paramObj = useParams();
 
@@ -158,19 +161,22 @@ const MyProfileManagement = (props) => {
         companySelectSearch(id)
     }
 
-    const companySelectSearch = (id) => {
+    const companySelectSearch = (id, page) => {
         setFindOpuser([]);
         setSelectOpCom("");
         setAddOpUserMsg("");
+        setPages([]);
+        setPageInf({prev:false, next:false, startPage:0, lastPage:0});
         if(!id){
             return;
         }
         setSelectOpCom(id);
 
+        if(page === undefined) page = 1;
         
-
         let tranfindUserInfo = async () => {
-            transactionAdd("get", "operatoruser/"+id, "", companySelectHandlerCallback);
+            // console.log("operatoruser/"+id +"/"+page);
+            transactionAdd("get", "operatoruser/"+id +"/"+page + "/"+pageListCnt, "", companySelectHandlerCallback);
         }
         tranfindUserInfo();
     }
@@ -193,13 +199,13 @@ const MyProfileManagement = (props) => {
                 arrOpUserData.push(obj);
              
             }
-            // console.log(arrOpUserData);
+
             setFindOpuser(arrOpUserData);
 
             let totCnt = data.totCnt;
-            let currentPage = 1;
-            let showTotPage = 3;
-            let totPage = Math.ceil(totCnt / showTotPage);            
+            let currentPage = data.currentPage;
+            let showTotPage = dividePage;
+            let totPage = Math.ceil(totCnt / data.pageListCnt);            
             /*
             1 -> 1, 2, 3
             2 -> 1, 2, 3
@@ -207,37 +213,60 @@ const MyProfileManagement = (props) => {
             4 -> 4, 5, 6
             ...
             */
-            let startPage;
+            let showTotPages;
             
             let p = Math.floor(currentPage / showTotPage);
             let n = currentPage % showTotPage;
             if(n === 0){
-                startPage = (p-1)*showTotPage + 1;
+                showTotPages = (p-1)*showTotPage + 1;
             }else{
-                startPage = (p)*showTotPage + 1
+                showTotPages = (p)*showTotPage + 1
             }
-
-            // let endPage = startPage+2;
+            let pageArr = [];
             for(let i=0; i<showTotPage; i++){
-                if(startPage > totPage){
-                    return;
+                if(showTotPages > totPage){                    
+                    break;
                 }else{
-                    console.log(startPage++);
+
+                    pageArr.push(showTotPages);
+                    showTotPages++;
                 }
-                
+            }
+            let startPage = pageArr[0];
+            let endPage = pageArr[pageArr.length-1];
+
+            let prev, next;
+
+            if(startPage > showTotPage){
+                prev=true;
+            }else{
+                prev=false;
             }
 
-            
+            console.log(startPage, endPage, showTotPage, totPage);
 
-            // if(currentPage < showTotPage){
+            if(endPage < totPage){
+                next = true;
+            }else{
+                next = false;
+            }
 
-            // }
-            
-            // for(let i=0; i<totPage; i++){
-
-            // }
+            let pageObj={
+                prev:prev, 
+                next:next,
+                startPage:startPage-1,
+                lastPage:endPage+1
+            }
+            console.log(pageObj);
+            setPageInf(pageObj);
+            setPages(pageArr);  
         }
 
+    }
+
+    const pageMove = (e) => {
+        // console.log(e.page);
+        companySelectSearch(selectOpCom, e);
     }
 
     const addOperatorUserHandler = () => {
@@ -391,18 +420,29 @@ const MyProfileManagement = (props) => {
                 <div>
                     <nav aria-label="Page navigation example">
                         <ul className="pagination justify-content-center">
-                            {/* <li className="page-item disabled">
-                            <a className="page-link" href="#" tabindex="-10">Previous</a>
-                            </li> */}
-                            {/* <li className="page-item">
-                            <a className="page-link" href="#">Previous</a>
-                            </li>
-                            <li className="page-item"><a className="page-link" href="#">1</a></li>
-                            <li className="page-item"><a className="page-link" href="#">2</a></li>
-                            <li className="page-item"><a className="page-link" href="#">3</a></li>
-                            <li className="page-item">
-                            <a className="page-link" href="#">Next</a>
-                            </li> */}
+                            {
+                            (pages.length > 0)?
+                                (pageInf.prev)?
+                                <li className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} href='javascript:void(0);'>Previous</a></li>:
+                                <li className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} href='javascript:void(0);' >Previous</a></li>
+                            :""
+                            }
+
+                            
+                            {
+                                pages.map((e, i)=>
+                                    <>
+                                    <li key={i} className="page-item"><a className="page-link" href='javascript:void(0);' onClick={()=>pageMove(e)}>{e}</a></li>
+                                    </>
+                                )
+                            }
+                            {
+                            (pages.length > 0)?
+                                (pageInf.next && pages.length > 0)?
+                                <li className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} href='javascript:void(0);'>next</a></li>:
+                                <li className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} href='javascript:void(0);' >next</a></li>
+                            :""
+                            }
                         </ul>
                     </nav>
                 </div>

@@ -1,12 +1,12 @@
-import { useEffect, useState, useContext } from "react";
+import { useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import Button from '../Share/Button.js';
 import Input from '../Share/Input.js';
 import styles from './mycss/login.module.css'
+import table from './mycss/table.module.css'
+
 import '../Share/Button.css'
 import Table from "../Share/Table.js";
-import { SimStateContext } from "../App.js";
-// import { SimStateContext } from "../App.js";
 import {transactionAdd} from '../utils/transaction'
 import Modal from './modals/Modal.js';
 
@@ -25,12 +25,18 @@ const MyProfileManagement = (props) => {
     const [operatorUserEmail, setOperatorUserEmail] = useState("");
     const [addOpUserMsg, setAddOpUserMsg] = useState("");
     const [modalShow, setModalShow] = useState(false);
+    const [modalShow2, setModalShow2] = useState(false);
+    
     const [confirm, setConfirm] = useState(false);
+    const [confirm2, setConfirm2] = useState(false);
 
     const [pages, setPages] = useState([]);
     const [pageInf, setPageInf] = useState({prev:false, next:false, startPage:0, lastPage:0} );
-    const [pageListCnt, setPageListCnt] = useState(2);
-    const [dividePage, setDividePage] = useState(1);
+    const [pageListCnt, setPageListCnt] = useState(10);
+    const [dividePage, setDividePage] = useState(5);
+    const [page, setPage] = useState(1);
+    
+    const [delOpUserId, setDelOpUserId] = useState({id:"",email:"",company_id:""});
 
     const navigate = useNavigate()
     const paramObj = useParams();
@@ -60,13 +66,19 @@ const MyProfileManagement = (props) => {
         }
     }, [confirm]);
 
+    useEffect(() => {
+        if(confirm2 === true){
+            operatorUserDel();
+        }
+    }, [confirm2]);
+
     const transactionAddCallback = (data, error) => { 
         if(data){
             getUserData(
                 {id:data.id, email:data.email}
             )
             props.getLoginYn("y");
-            console.log(userData.id);
+            // console.log(userData.id);
             let tranfindUserInfo = async () => {
                 transactionAdd("get", "user/"+data.id, "", findUserInfoCallback);
             }
@@ -106,58 +118,10 @@ const MyProfileManagement = (props) => {
 
 
     
-    // console.log(findUserInfo);
-
-
-    
-
-    // let findUserInfo = userData.find((elem)=>{
-    //     //return elem.email = loginObj.email;        
-    //     // if(elem._id == paramObj.userId){
-    //     //     return true;
-    //     // }
-    
-    
-    // });
-    // if(!data.id){
-    //     return;  
-    // }
-    
-    let arrfindCompanyInfo = [];
-
-    // console.log("findUserInfo", findUserInfo);
-
-    // findUserInfo.companies_manager.forEach((companyId) => {
-    //     // console.log("companyId::",companyId);
-
-    //     // let findCompanyInfo = companyData.find((elem)=>{
-    //     //     //return elem.email = loginObj.email;
-    //     //     if(elem._id == companyId.company_id){
-    //     //         return true;
-    //     //     }
-    //     // });
-    //     // arrfindCompanyInfo.push(findCompanyInfo);
-    // });
-
-    let arrfindOperatorUserInfo=[];
-
-    // if(arrfindCompanyInfo.length > 0){
-    //     showHide = "";
-    //     showHide2 = "d-none";
-    //     //setFindOpuserFunc(arrfindCompanyInfo[0]._id);
-    // }
-
-    function setFindOpuserFunc(id){
-        // arrfindOperatorUserInfo = operatorUserData.filter((elem)=>{
-        //     return elem.company_id == id;
-        // });
-        // setFindOpuser(arrfindOperatorUserInfo);
-        // setSelectOpCom(id);
-        
-    }
 
     const companySelectHandler = (e) => { 
         let id=e.target.value;
+        setPages([]);
         companySelectSearch(id)
     }
 
@@ -165,15 +129,16 @@ const MyProfileManagement = (props) => {
         setFindOpuser([]);
         setSelectOpCom("");
         setAddOpUserMsg("");
-        setPages([]);
+        
         setPageInf({prev:false, next:false, startPage:0, lastPage:0});
+        
         if(!id){
             return;
         }
         setSelectOpCom(id);
 
         if(page === undefined) page = 1;
-        
+        setPage(page);
         let tranfindUserInfo = async () => {
             // console.log("operatoruser/"+id +"/"+page);
             transactionAdd("get", "operatoruser/"+id +"/"+page + "/"+pageListCnt, "", companySelectHandlerCallback);
@@ -206,13 +171,7 @@ const MyProfileManagement = (props) => {
             let currentPage = data.currentPage;
             let showTotPage = dividePage;
             let totPage = Math.ceil(totCnt / data.pageListCnt);            
-            /*
-            1 -> 1, 2, 3
-            2 -> 1, 2, 3
-            3 -> 1, 2, 3
-            4 -> 4, 5, 6
-            ...
-            */
+
             let showTotPages;
             
             let p = Math.floor(currentPage / showTotPage);
@@ -302,11 +261,14 @@ const MyProfileManagement = (props) => {
                 company_name:selectedCompany.company_name,
                 operatorUserEmail:operatorUserEmail
             }
-            console.log(obj);
+            // console.log(obj);
             transactionAdd("post", "regoperatoruser", obj, tranOperatorUserRegCallback);
         }
         tranOperatorUserReg();
     }
+
+
+    
 
     function tranOperatorUserRegCallback(data){
         setConfirm(false);
@@ -328,6 +290,50 @@ const MyProfileManagement = (props) => {
         setAddOpUserMsg("");
         setOperatorUserEmail(e.target.value);
     }
+
+    const deleteOperatorUserHandler = (id,email) => {
+        let obj={
+            id:id,
+            email:email,
+        }
+        setDelOpUserId(obj);
+        setModalShow2(true);
+        console.log(obj);
+    }
+
+    const setModalShowF2 = (yn) => {
+        setModalShow2(yn);
+    }
+
+    const setConfirmMod2 = (b) => {
+        setConfirm2(b);
+    }
+
+    function operatorUserDel(){
+        // console.log("");
+        // alert(delOpUserId);
+        let tranOperatorUserDel = async () => {
+            let obj ={
+                id:delOpUserId.id,
+                company_id:selectOpCom,
+                email:delOpUserId.email,
+                updUser:userData.email
+            }
+            transactionAdd("post", "deloperatoruser", obj, tranOperatorUserDelCallback);
+        }
+        tranOperatorUserDel();
+    }
+
+    function tranOperatorUserDelCallback(data){
+        setConfirm2(false);
+        // if(data.success === "n"){
+        //     // console.log(data.message);
+        //     setAddOpUserMsg(data.massage);  
+        //     return ;
+        // }
+        companySelectSearch(selectOpCom);
+    }
+
     
 
 
@@ -386,7 +392,7 @@ const MyProfileManagement = (props) => {
                 </div>
             </div>
 
-            <div className='content-box table-box'>
+            <div className={'content-box ' + table.tableAdd }>
                 <table className="table">
                 <thead>
                     <tr>
@@ -404,7 +410,9 @@ const MyProfileManagement = (props) => {
                             <td>{e.regDate.slice(0, 10)}</td>
                             <td>{e.user_name}</td>
                             <td>{e.user_email}</td>
-                            <td><button></button></td>
+                            <td>
+                                <Button buttonName={"Delete"} onClick={()=>deleteOperatorUserHandler(e._id, e.user_email)}/>
+                            </td>
                         </tr>
                         
                     )
@@ -418,29 +426,37 @@ const MyProfileManagement = (props) => {
                 </tbody>
                 </table>
                 <div>
+                {
+                    (modalShow2)?
+                    <Modal setModalShowF={setModalShowF2} modalTitle={"Operator user Deletion"} type={"confirm"} size="confirm" setConfirmMod={setConfirmMod2}
+                    msg={"Would you like to delete as an Operator user?"}/>
+                    :""
+                }
+                </div>
+                <div>
                     <nav aria-label="Page navigation example">
                         <ul className="pagination justify-content-center">
                             {
                             (pages.length > 0)?
                                 (pageInf.prev)?
-                                <li className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} href='javascript:void(0);'>Previous</a></li>:
-                                <li className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} href='javascript:void(0);' >Previous</a></li>
+                                <li  className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} >Previous</a></li>:
+                                <li  className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} >Previous</a></li>
                             :""
                             }
 
                             
                             {
                                 pages.map((e, i)=>
-                                    <>
-                                    <li key={i} className="page-item"><a className="page-link" href='javascript:void(0);' onClick={()=>pageMove(e)}>{e}</a></li>
-                                    </>
+                                    <li key={i} className={(page===e)?"page-item active":"page-item"}>
+                                        <a key={i+"a"} className="page-link" onClick={()=>pageMove(e)}><span style={{color:"black"}}>{e}</span></a>
+                                    </li>
                                 )
                             }
                             {
                             (pages.length > 0)?
                                 (pageInf.next && pages.length > 0)?
-                                <li className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} href='javascript:void(0);'>next</a></li>:
-                                <li className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} href='javascript:void(0);' >next</a></li>
+                                <li className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} >next</a></li>:
+                                <li className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} >next</a></li>
                             :""
                             }
                         </ul>

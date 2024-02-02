@@ -7,7 +7,7 @@ const Textarea = (props) => {
                 <label htmlFor={props.label} className={"form-label fw-bolder " + "labelText"}>{props.lable}</label>
                 :""
             }
-            <textarea className={" " + " textarea"} id="note" rows="5"></textarea>
+            <textarea className={" " + " textarea"} id={props.id} rows="5" onChange={props.onChange} value={props.value}></textarea>
         </>
      );
 }

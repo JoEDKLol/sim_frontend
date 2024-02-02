@@ -16,44 +16,44 @@ const Inventory = () => {
     // Get access to the company ID that's encoded in the URL
     const companyUrlId = useParams().companyId;
 
-    useEffect(() => {
-        const fetchData = async () => {
-            try {
-                // Load the inventory data from the json file to the responseData Object
-                const inventoryResponse = await fetch('/jsontest/inventory.json');
-                const inventoryResponseData = await inventoryResponse.json();
+    // useEffect(() => {
+    //     const fetchData = async () => {
+    //         try {
+    //             // Load the inventory data from the json file to the responseData Object
+    //             const inventoryResponse = await fetch('/jsontest/inventory.json');
+    //             const inventoryResponseData = await inventoryResponse.json();
 
-                // Write the data to the state
-                setInventoryData(inventoryResponseData);
-            } catch (err) {
-                console.log(err)
-            }
-        };
+    //             // Write the data to the state
+    //             setInventoryData(inventoryResponseData);
+    //         } catch (err) {
+    //             console.log(err)
+    //         }
+    //     };
 
-        fetchData();
-    }, [companyUrlId])
+    //     fetchData();
+    // }, [companyUrlId])
 
-    if (!inventoryData) {
-        return <p>is Loading...</p>
-    }
+    // if (!inventoryData) {
+    //     return <p>is Loading...</p>
+    // }
 
     const selectHandler = e => {
         // Navigate to another company
-        console.log('selectworking')
-        navigate(`/companyDashboard/${e.target.value}`)
+        // console.log('selectworking')
+        // navigate(`/companyDashboard/${e.target.value}`)
 
-        console.log('key', e.target)
+        // console.log('key', e.target)
 
     }
 
-    const clickHandler = e => {
-        e.preventDefault();
-        navigate(`/companyDashboard/${e.target.key}`)
-    }
+    // const clickHandler = e => {
+    //     e.preventDefault();
+    //     navigate(`/companyDashboard/${e.target.key}`)
+    // }
 
     // Get the data for a specify company
-    const companyFilterByCompanyId = inventoryData.filter(data => data.company_id === companyUrlId);
-    console.log('id', companyFilterByCompanyId)
+    // const companyFilterByCompanyId = inventoryData.filter(data => data.company_id === companyUrlId);
+    // console.log('id', companyFilterByCompanyId)
 
     return (
         <div>
@@ -61,8 +61,8 @@ const Inventory = () => {
 
             <div className='content-box  table-box' >
 
-                {!companyFilterByCompanyId && <div><p>You don't have any inventory yet.</p> <Button buttonName='Add an inventory' onClick={e => clickHandler(e)} /></div>}
-                {companyFilterByCompanyId && <InventoryTable tableHead={tableHead} tableData={companyFilterByCompanyId} />}
+                {/* {!companyFilterByCompanyId && <div><p>You don't have any inventory yet.</p> <Button buttonName='Add an inventory' onClick={e => clickHandler(e)} /></div>}
+                {companyFilterByCompanyId && <InventoryTable tableHead={tableHead} tableData={companyFilterByCompanyId} />} */}
 
             </div>
         </div >

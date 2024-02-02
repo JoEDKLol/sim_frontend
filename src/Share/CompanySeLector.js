@@ -30,7 +30,7 @@ const CompanySelector = (props) => {
     }
 
     // Get the companys of the given user
-    const user = userData.find(data => data._id === USERID);
+    const user = userData.find(data => data._id === '652f73dfbb5be4ed4b9588b0');
 
 
 

@@ -5,8 +5,10 @@ import Input from '../Share/Input.js';
 import styles from './mycss/login.module.css'
 import table from './mycss/table.module.css'
 
+import paging from './mycss/paging.module.css'
+
 import '../Share/Button.css'
-import Table from "../Share/Table.js";
+// import Table from "../Share/Table.js";
 import {transactionAdd} from '../utils/transaction'
 import Modal from './modals/Modal.js';
 
@@ -126,10 +128,11 @@ const MyProfileManagement = (props) => {
     }
 
     const companySelectSearch = (id, page) => {
+        setPages([]);
         setFindOpuser([]);
         setSelectOpCom("");
         setAddOpUserMsg("");
-        
+        // console.log("여기");
         setPageInf({prev:false, next:false, startPage:0, lastPage:0});
         
         if(!id){
@@ -148,7 +151,6 @@ const MyProfileManagement = (props) => {
 
     const companySelectHandlerCallback = (data) => {
         // console.log(data.totCnt);
-
         let operatorUserData = data.list;
         
         if(operatorUserData.length !== 0){
@@ -202,7 +204,7 @@ const MyProfileManagement = (props) => {
                 prev=false;
             }
 
-            console.log(startPage, endPage, showTotPage, totPage);
+            // console.log(startPage, endPage, showTotPage, totPage);
 
             if(endPage < totPage){
                 next = true;
@@ -216,7 +218,7 @@ const MyProfileManagement = (props) => {
                 startPage:startPage-1,
                 lastPage:endPage+1
             }
-            console.log(pageObj);
+            // console.log(pageObj);
             setPageInf(pageObj);
             setPages(pageArr);  
         }
@@ -298,7 +300,7 @@ const MyProfileManagement = (props) => {
         }
         setDelOpUserId(obj);
         setModalShow2(true);
-        console.log(obj);
+        // console.log(obj);
     }
 
     const setModalShowF2 = (yn) => {
@@ -331,6 +333,7 @@ const MyProfileManagement = (props) => {
         //     setAddOpUserMsg(data.massage);  
         //     return ;
         // }
+        // alert("조회");
         companySelectSearch(selectOpCom);
     }
 
@@ -418,11 +421,9 @@ const MyProfileManagement = (props) => {
                     )
                     :
                        <tr >
-                            <td colSpan={3}>no search results.</td>
+                            <td colSpan={4}>no search results.</td>
                         </tr>
                     }
-
-                    {/* {props.tableData.map(data => <InventoryPurchaseRow row={data} key={data.inventory_info._id} />)} */}
                 </tbody>
                 </table>
                 <div>
@@ -439,24 +440,28 @@ const MyProfileManagement = (props) => {
                             {
                             (pages.length > 0)?
                                 (pageInf.prev)?
-                                <li  className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} >Previous</a></li>:
-                                <li  className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.startPage)} >Previous</a></li>
+                                <li  className="page-item " ><a className="page-link" style={{color:"black"}} onClick={()=>pageMove(pageInf.startPage)} >Previous</a></li>:
+                                <li  className="page-item disabled" ><a className="page-link" style={{color:"grey"}} onClick={()=>pageMove(pageInf.startPage)} >Previous</a></li>
                             :""
                             }
 
                             
                             {
                                 pages.map((e, i)=>
-                                    <li key={i} className={(page===e)?"page-item active":"page-item"}>
-                                        <a key={i+"a"} className="page-link" onClick={()=>pageMove(e)}><span style={{color:"black"}}>{e}</span></a>
-                                    </li>
+                                    // <li key={i} className={(page===e)?"page-item active":"page-item"}>
+                                    <li key={i} className="page-item">
+                                        {(page===e)?
+                                        <a key={i+"a"} id={paging.aNumbers} className="page-link " onClick={()=>pageMove(e)}>{e}</a>
+                                        :<a key={i+"a"} id={paging.aNumbers_selected} className="page-link " onClick={()=>pageMove(e)}>{e}</a>
+                                        }
+                                        </li>
                                 )
                             }
                             {
                             (pages.length > 0)?
-                                (pageInf.next && pages.length > 0)?
-                                <li className="page-item "><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} >next</a></li>:
-                                <li className="page-item disabled"><a className="page-link" onClick={()=>pageMove(pageInf.lastPage)} >next</a></li>
+                                (pageInf.next)?
+                                <li className="page-item "><a className="page-link" style={{color:"black"}} onClick={()=>pageMove(pageInf.lastPage)} >next</a></li>:
+                                <li className="page-item disabled"><a className="page-link" style={{color:"grey"}} onClick={()=>pageMove(pageInf.lastPage)} >next</a></li>
                             :""
                             }
                         </ul>

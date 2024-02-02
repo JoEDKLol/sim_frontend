@@ -58,7 +58,7 @@ const transactionAdd = async (type, url, obj, callback) => {
         let tokenObj = {}
         tokenObj.accesstoken = resp.headers.accesstoken;
         tokenObj.refreshtoken = resp.headers.refreshtoken;
-        
+
         if(data.message === "newToken"){
             storeToken(tokenObj);    
             if(type == "get"){
@@ -70,11 +70,11 @@ const transactionAdd = async (type, url, obj, callback) => {
             }
             
         }
-        // console.log(resp);
+        // console.log(data);
         callback(data);
     }
     catch(error){
-        //callback("", error);
+        // console.log("error");
         if(error){
             callback("", error.response.data);
         }

@@ -97,10 +97,12 @@ function App() {
                             <Login getLoginYn={getLoginYn} getUserData={getUserData} />} />
                         <Route path="/signup" element={(loninYn==="y")?<Navigate to={"/myProfileManagement/"}/>:<SignUp />} />
                         <Route path="/forgetpassword" element={(loninYn==="y")?<Navigate to={"/myProfileManagement/"}/>:<ForgetPassword />} />
-
                         <Route path="/myProfileManagement/" element={<MyProfileManagement getLoginYn={getLoginYn} />} />
-                        <Route path="/myCompanyList/:userId" element={<MyCompanyList />} />
-                        <Route path="/companyDashboard/:companyId" element={<CompanyDashboard />} />
+                        <Route path="/myCompanyList/" element={<MyCompanyList getLoginYn={getLoginYn}/>} />
+
+                        {/* <Route path="/companyDashboard/" element={(loninYn==="y")?<Navigate to={"/myProfileManagement/"}/>:<CompanyDashboard />} /> */}
+                        <Route path="/companyDashboard/:companyId" element={<CompanyDashboard getLoginYn={getLoginYn}/> }  />
+
                         <Route path="/inventoryRegister/:companyId" element={<InventoryRegister />} />
                         <Route path="/inventory/:companyId" element={<Inventory />} />
                         <Route path="inventoryHistory/:inventoryId" element={<InventoryHistory />} />

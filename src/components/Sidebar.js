@@ -27,8 +27,8 @@ const Sidebar = (props) => {
             manu =
                 [
                     //{"title":"My profile", "linkTo":"/myProfileManagement/"+param, "selected":styles.sideBarLinkSelected},
-                    { "title": "My profile", "linkTo": "/myProfileManagement/" + param, "selected": (currPage === "myProfileManagement") ? styles.sideBarLinkSelected : "" },
-                    { "title": "My company", "linkTo": "/MyCompanyList/" + param, "selected": (currPage === "MyCompanyList") ? styles.sideBarLinkSelected : "" }
+                    { "title": "My profile", "linkTo": "/myProfileManagement/", "selected": (currPage === "myProfileManagement") ? styles.sideBarLinkSelected : "" },
+                    { "title": "My company", "linkTo": "/MyCompanyList/", "selected": (currPage === "MyCompanyList") ? styles.sideBarLinkSelected : "" }
                 ];
         } else {
             manu =

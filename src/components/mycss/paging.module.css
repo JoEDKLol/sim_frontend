@@ -1,0 +1,47 @@
+#aNumbers{
+
+    background-color: #7E9085;
+    color: rgb(255, 255, 255);
+    /* border-width: thin; */
+    /* border-width:1.4px; */
+    /* border-width: 1px 1px 1px 1px; */
+    /* border-right: 2px solid; */
+    /* border-color:#7E9085; */
+
+
+}
+
+#aNumbers_selected{
+    /* background-color: rgb(194, 66, 66); */
+    color: rgb(0, 0, 0);
+    
+}
+
+#aNumbers:link{
+
+    /* background-color: rgb(209, 31, 31);
+    border-color: aquamarine; */
+
+}
+
+#aNumbers:visited{
+
+    /* background-color: rgb(94, 22, 22);
+    border-color: aquamarine; */
+
+}
+
+
+#aNumbers:hover{
+
+    /* background-color: white;
+    border-color: aquamarine; */
+
+}
+
+#aNumbers:active{
+
+    /* background-color: rgb(222, 22, 22);
+    border-color: aquamarine; */
+
+}

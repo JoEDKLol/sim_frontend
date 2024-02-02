@@ -39,7 +39,10 @@ const Modal = (props) => {
                     <div className={'row' }>
                         <div>
                             {
-                                (props.type == "company")?<CompanyRegModal/>:
+                                (props.type == "company")?<CompanyRegModal obj={props.obj} setModalShowF={props.setModalShowF} setCompanyRegValue={props.setCompanyRegValue}
+                                action={props.action}
+                                updateCompany={props.updateCompany}
+                                />:
                                 (props.type == "inventory")?<InventoryRegModal/>:
                                 (props.type == "confirm")?<ConfirmModal msg={props.msg} setModalShowF={props.setModalShowF} setConfirmMod={props.setConfirmMod}/>:""
                                 

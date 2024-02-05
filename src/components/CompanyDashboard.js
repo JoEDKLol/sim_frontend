@@ -11,7 +11,7 @@ import {transactionAdd} from '../utils/transaction'
 const CompanyDashboard = (props) => {
     const paramObj = useParams();
     const navigate = useNavigate();
-    const [companyInfo, setCompanyInfo] = useState([]);
+    const [companyInfo, setCompanyInfo] = useState({});
     const [userData, setUserData] = useState({id:'',email:''});
     
     /* Modal */
@@ -44,7 +44,7 @@ const CompanyDashboard = (props) => {
     }
 
     function companySearch(companyId){
-        console.log(companyId);
+        // console.log(companyId);
         let tranCompanySearch = async () => {
             
             transactionAdd("get", "companysearch/"+companyId, "", companySearchCallback);
@@ -55,7 +55,8 @@ const CompanyDashboard = (props) => {
     function companySearchCallback(data){
         // setConfirm2(false);
         // userSearch(userData.id);
-        console.log(data);
+        // console.log(data);
+        setCompanyInfo(data);
 
     }
     
@@ -94,23 +95,24 @@ const CompanyDashboard = (props) => {
                 <h2 className="report-title text-start">DashBoard</h2>
                 <div className={"row mt-4 "}>
                     <div className='col-8 mb-1 '>
-                        <p className="text-start fw-bolder text-start fs-3 p-0 m-0 ps-2">{(companyInfo.name)?companyInfo.name:""}</p>
+                        {/* <p className="text-start fw-bolder text-start fs-3 p-0 m-0 ps-2">{(companyInfo.name)?companyInfo.name:""}</p> */}
                     </div>
                     <div className='col-4 mb-1 d-flex justify-content-end align-self-center '>
-                        <p className="text-start fw-bolder me-3 p-0 m-0 ">username : {sessionStorage.getItem("userName")}</p>
+                        <p className="text-start fw-bolder me-3 p-0 m-0 ">{(companyInfo.name)?companyInfo.name:""}</p>
                     </div>
                 </div>
             </div>
                 
             {/* <div className='text-end me-4'>
                 <Button type='submit' buttonName='Inventory Registration' onClick={e => inventoryRegClickHandler(e)}></Button>
-            </div> */}
-            <div className='mt-1 ms-4 text-start'>
                 {
                     (modalShow)?
                     <Modal setModalShowF={setModalShowF} modalTitle={"Inventory Registration"} type={"inventory"}/>
                     :""
                 }
+            </div> */}
+            <div className='mt-1 ms-4 text-start'>
+                
             </div>
             <div className={" table-box " + styles.divSize}>
                 

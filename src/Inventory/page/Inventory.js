@@ -1,20 +1,20 @@
 import { useState, useEffect } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 
-import InventoryTable from "../components/InventoryTable";
+// import InventoryTable from "../components/InventoryTable";
 import Button from "../../Share/Button";
-import CompanySelector from "../../Share/CompanySeLector";
-
-
+// import CompanySelector from "../../Share/CompanySeLector";
+import Modal from '../../components/modals/Modal.js';
 const Inventory = () => {
     const tableHead = ['SKU', 'NAME', 'IN-STOCK', 'ACTION']
     const [inventoryData, setInventoryData] = useState();
-
+    /* Modal */
+    const [modalShow, setModalShow] = useState(false);
 
     const navigate = useNavigate();
 
     // Get access to the company ID that's encoded in the URL
-    const companyUrlId = useParams().companyId;
+    // const companyUrlId = useParams().companyId;
 
     // useEffect(() => {
     //     const fetchData = async () => {
@@ -54,18 +54,33 @@ const Inventory = () => {
     // Get the data for a specify company
     // const companyFilterByCompanyId = inventoryData.filter(data => data.company_id === companyUrlId);
     // console.log('id', companyFilterByCompanyId)
+    const inventoryRegClickHandler = (e) => {
+        setModalShow(true);
+    }
 
+    const setModalShowF = (yn) => {
+        setModalShow(yn);
+    }
     return (
-        <div>
-            <CompanySelector onChange={e => selectHandler(e)} selected={companyUrlId} />
-
-            <div className='content-box  table-box' >
-
-                {/* {!companyFilterByCompanyId && <div><p>You don't have any inventory yet.</p> <Button buttonName='Add an inventory' onClick={e => clickHandler(e)} /></div>}
-                {companyFilterByCompanyId && <InventoryTable tableHead={tableHead} tableData={companyFilterByCompanyId} />} */}
-
+        <>
+        <div className="content-box period-box mb-4">
+            <h2 className="report-title text-start">Inventory</h2>
+            <hr/>
+            <div className={"row mt-4 pe-3"}>
+                <div className='text-end mb-3'>
+                    <Button type='submit' buttonName='Inventory Registration' onClick={e => inventoryRegClickHandler(e)}></Button>
+                </div>
             </div>
-        </div >
+
+        </div>
+        <div className='mt-1 ms-4 text-start'>
+        {
+            (modalShow)?
+            <Modal setModalShowF={setModalShowF} modalTitle={"Inventory Registration"} type={"inventory"}/>
+            :""
+        }
+        </div>
+        </>
     )
 
 

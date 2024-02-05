@@ -27,7 +27,8 @@ import Sidebar from './components/Sidebar';
 import MyCompanyList from './components/MyCompanyList';
 import CompanyDashboard from './components/CompanyDashboard';
 import InventoryHistory from './InventoryHistory/page/InventoryHistory';
-import Inventory from './Inventory/page/Inventory';
+// import Inventory from './Inventory/page/Inventory';
+import Inventory from './components/Inventory';
 import InventoryRegister from './InventoryRegister/page/InventoryRegister';
 
 import {transactionAdd} from './utils/transaction'
@@ -103,8 +104,8 @@ function App() {
                         {/* <Route path="/companyDashboard/" element={(loninYn==="y")?<Navigate to={"/myProfileManagement/"}/>:<CompanyDashboard />} /> */}
                         <Route path="/companyDashboard/:companyId" element={<CompanyDashboard getLoginYn={getLoginYn}/> }  />
 
-                        <Route path="/inventoryRegister/:companyId" element={<InventoryRegister />} />
-                        <Route path="/inventory/:companyId" element={<Inventory />} />
+                        {/* <Route path="/inventoryRegister/:companyId" element={<InventoryRegister getLoginYn={getLoginYn} />} /> */}
+                        <Route path="/inventory/:companyId" element={<Inventory getLoginYn={getLoginYn} />} />
                         <Route path="inventoryHistory/:inventoryId" element={<InventoryHistory />} />
                         <Route path="/purchaseDetail/:companyId" element={<InventoryPurchaseDetail />} />
                         <Route path="/salesDetail/:companyId" element={<InventorySalesDetails />} />

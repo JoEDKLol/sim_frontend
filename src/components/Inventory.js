@@ -5,6 +5,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import Modal from './modals/Modal.js';
 import Input from '../Share/Input.js';
 const Inventory = (props) => {
+    const paramObj = useParams();
     const navigate = useNavigate();
     const tableHead = ['SKU', 'NAME', 'IN-STOCK', 'ACTION']
     const [inventoryData, setInventoryData] = useState();
@@ -30,13 +31,29 @@ const Inventory = (props) => {
                 {id:data.id, email:data.email}
             )
             props.getLoginYn("y");
+            // console.log(paramObj.companyId);
+            inventorySearch(paramObj.companyId);
         }
 
         if(error){
-            console.log("token login fail" );
+            // console.log("token login fail" );
             props.getLoginYn("n");
             navigate('/login/')
         }
+    }
+
+    function inventorySearch(id){
+        // console.log(id);
+        // return;
+        let tranfindUserInfo = async () => {
+            transactionAdd("get", "inventorysearch/"+id, "", inventorySearchCallback);
+        }
+
+        let inventorySearchCallback = (data) => {
+            
+        }
+
+        tranfindUserInfo();
     }
 
     const inventoryRegClickHandler = (e) => {
